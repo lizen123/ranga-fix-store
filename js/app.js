@@ -5,22 +5,26 @@ const loadProducts = () => {
 };
 
 
-// show all product in UI 
+// show all product in UI
+
 const showProducts = (products) => {
   const allProducts = products.map((pd) => pd);
   for (const product of allProducts) {
     const image = product.images;
     const div = document.createElement("div");
     div.classList.add("product");
-    div.innerHTML = `<div class="single-product">
+    div.innerHTML = `<div class="single-product bg-secondary">
       <div>
-    <img class="product-image" src=${image}></img>
+    <img class="product-image" src=${product.image}></img>
       </div>
       <h3>${product.title}</h3>
-      <p>Category: ${product.category}</p>
-      <h2>Price: $ ${product.price}</h2>
-      <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
-      <button id="details-btn" class="btn btn-danger">Details</button></div>
+      
+      <p><span class='fw-bold'>Category</span>: ${product.category}</p>
+      <h2>Price: $${product.price}</h2>
+      
+      <h3><i class="fas fa-star"></i><span class='text-danger'>${product.rating.rate}</span> <i class="fas fa-user"></i><span class='text-warning'> ${product.rating.count}</span></h3>
+      <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success ">add to cart</button>
+      <button type="button" onclick="singleProduct(${product.id})" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button>
       `;
     document.getElementById("all-products").appendChild(div);
   }
@@ -29,31 +33,70 @@ let count = 0;
 const addToCart = (id, price) => {
   count = count + 1;
   updatePrice("price", price);
-
   updateTaxAndCharge();
+  updateTotal();
+// product price in total
+
+  
   document.getElementById("total-Products").innerText = count;
 };
+const singleProduct = (id) => {
+  const url = `https://fakestoreapi.com/products/${id}`;
+  fetch(url)
+    .then(res => res.json())
+    .then(data => displayModal(data));
+}
+
+
+const displayModal = (product) => {
+
+  const div = document.createElement("div");
+  div.innerHTML = `
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">About these Product:</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      When we sell our own products, we get excited about individual product features and specifications. We live and breathe our company, our website, and our products.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-warning">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+  `
+
+  document.getElementById('modalBox').appendChild(div);
+}
 
 const getInputValue = (id) => {
   const element = document.getElementById(id).innerText;
-  const converted = parseInt(element);
+  const converted = parseFloat(element);
   return converted;
 };
 
-// main price update function
+// main price update function 
+
 const updatePrice = (id, value) => {
   const convertedOldPrice = getInputValue(id);
   const convertPrice = parseFloat(value);
   const total = convertedOldPrice + convertPrice;
-  document.getElementById(id).innerText = Math.round(total);
+  document.getElementById(id).innerText = (total.toFixed(2));
 };
-
+ 
 // set innerText function
+
 const setInnerText = (id, value) => {
-  document.getElementById(id).innerText = Math.round(value);
+  document.getElementById(id).innerText = (value.toFixed(2));
 };
 
 // update delivery charge and total Tax
+
 const updateTaxAndCharge = () => {
   const priceConverted = getInputValue("price");
   if (priceConverted > 200) {
@@ -71,10 +114,11 @@ const updateTaxAndCharge = () => {
 };
 
 //grandTotal update function
+
 const updateTotal = () => {
   const grandTotal =
     getInputValue("price") + getInputValue("delivery-charge") +
     getInputValue("total-tax");
-  document.getElementById("total").innerText = grandTotal;
+    document.getElementById("total").innerText = (grandTotal).toFixed(2);
 };
 loadProducts();
