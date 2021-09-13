@@ -1,5 +1,6 @@
 body {
   overflow-x: hidden;
+  
   font-family: "Montserrat", sans-serif;
 }
 
@@ -14,9 +15,11 @@ body {
   margin: auto;
   align-items: center;
   justify-content: center;
+  color: white;
   
 }
 .single-product {
+  background-color: rgb(186, 174, 199);
   height: 600px;
   transition: 0.6s;
 }
