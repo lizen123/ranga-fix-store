@@ -24,7 +24,7 @@ const showProducts = (products) => {
       
       <h3><i class="fas fa-star"></i><span class='text-danger'>${product.rating.rate}</span> <i class="fas fa-user"></i><span class='text-warning'> ${product.rating.count}</span></h3>
       <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success ">add to cart</button>
-      <button type="button" onclick="singleProduct(${product.id})" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button>
+      <button type="button" onclick="singleProduct(${product.id})" class="btn btn-info ms-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button></div>
       `;
     document.getElementById("all-products").appendChild(div);
   }
@@ -32,12 +32,13 @@ const showProducts = (products) => {
 let count = 0;
 const addToCart = (id, price) => {
   count = count + 1;
+  // called products price function
   updatePrice("price", price);
+  // called updateTax function
   updateTaxAndCharge();
+  // called updateTotal function
   updateTotal();
 // product price in total
-
-  
   document.getElementById("total-Products").innerText = count;
 };
 const singleProduct = (id) => {
@@ -47,7 +48,7 @@ const singleProduct = (id) => {
     .then(data => displayModal(data));
 }
 
-
+// modal blog
 const displayModal = (product) => {
 
   const div = document.createElement("div");
@@ -73,7 +74,6 @@ const displayModal = (product) => {
 
   document.getElementById('modalBox').appendChild(div);
 }
-
 const getInputValue = (id) => {
   const element = document.getElementById(id).innerText;
   const converted = parseFloat(element);
