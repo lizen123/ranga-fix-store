@@ -20,7 +20,7 @@ body {
 .single-product {
   color: black;
   background-color: #e3dac9;
-  height: 600px;
+  height: 650px;
   transition: 0.6s;
 }
 .single-product:hover {
