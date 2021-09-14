@@ -27,9 +27,10 @@ const showProducts = (products) => {
       <i class="fas fa-star stars"></i>
       <i class="fas fa-star-half-alt stars"></i>
       <span>${product.rating.rate}</span> </h5>
-      <h5><i class="fas fa-user "></i><span class='text-black'> ${product.rating.count}</span></h5>
-      <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="btn btn-warning fw-bold">add to cart <i class="fas fa-shopping-cart"></i></button>
-      <button type="button" onclick="singleProduct(${product.id})" class="btn button fw-bold ms-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button></div>
+      <h5><i class="fas fa-user "></i><span class='text-black'> ${product.rating.count}</span>
+      </h5>
+      <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="btn button fw-bold">add to cart <i class="fas fa-shopping-cart text-light"></i></button>
+      <button type="button" onclick="singleProduct(${product.id})" class="btn btn-secondary text-warning fw-bold ms-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button></div>
       `;
     document.getElementById("all-products").appendChild(div);
   }
@@ -46,6 +47,7 @@ const addToCart = (id, price) => {
 // product price in total
   document.getElementById("total-Products").innerText = count;
 };
+// modal
 const singleProduct = (id) => {
   const url = `https://fakestoreapi.com/products/${id}`;
   fetch(url)
@@ -70,7 +72,7 @@ const displayModal = (product) => {
       </div>
       
       <div class="modal-footer">
-        <button type="button" class="btn btn-warning">Close</button>
+      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
